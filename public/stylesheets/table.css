@@ -1,0 +1,31 @@
+.ui-draggable, .ui-droppable {background-position: top;	}
+label, input{ display:block; }
+input.text { margin-bottom:12px; width:95%; padding:5px; }
+fieldset { padding:0; border:0; margin-top:25px; }
+h1{ font-size: 20px; margin: 10px 0; }
+.contain { width: 740px; margin: 20px 0;}
+.contain table { margin: 15px 0; border-collapse: collapse; width: 100%; }
+.contain table td, .contain table th { border: 1px solid #eee; padding: 10px 10px; text-align: center; }
+.ui-dialog .ui-state-error { padding: 5px; }
+.validateTips { border: 1px solid transparent; padding: 5px; }
+.ui-tabs .ui-tabs-panel{padding:0px;}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+td.checkbox:before{
+	display: block;
+	content: ' ';
+    margin-top: -6px;
+    margin-left: -6px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+td.checkbox:after {
+    display: block;
+    position: absolute;	
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    box-sizing: border-box;
+}

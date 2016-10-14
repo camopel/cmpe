@@ -1,0 +1,182 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background: #fff;
+	color:#333;
+	font-size: 13px;
+}
+
+div {
+    display: block;
+	margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+#tabs{
+	width:1000px;
+	margin:0px auto;
+}
+
+.banner{
+	margin:0px auto;
+	width:738px;
+	height:45px;
+}
+.ui-draggable, .ui-droppable {background-position: top;	}
+label, input{ display:block; }
+input.text,textarea{ margin-bottom:10px; width:280px; padding:5px; }
+select{ margin-bottom:10px; width:292px; padding:5px; }
+fieldset { padding:0; border:0; margin:15px; }
+h1{ font-size: 20px; margin: 10px 0; }
+.contain { width: 100%; margin: 15px 0;}
+.contain table { margin: 5px 0 0; border-collapse: collapse; width: 100%; }
+.contain table td, .contain table th { border: 1px solid #eee; padding: 5px; text-align: center; }
+.ui-dialog .ui-state-error { padding: 5px; }
+.validateTips { border: 1px solid transparent; padding: 0px; margin:0px;font-size:12px;}
+.ui-tabs .ui-tabs-panel{padding:0px;}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+td.checkbox:before, td.checkbox.checked:after{
+	display: block;
+	width: 12px;
+    height: 12px;	
+    position: absolute;
+	box-sizing: border-box;
+}
+td.checkbox:before{	
+	content: ' ';
+    margin-top: -6px;
+    margin-left: 6px;
+    border: 1px solid black !important;
+    border-radius: 3px;	
+}
+td.checkbox.checked:after {    
+	content: '\2714';
+    margin-top: -8px;
+    margin-left: 6px;
+}
+.ctrlBtn{
+	width: 80px;
+    overflow: visible;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;	
+	box-shadow: rgba(0,0,0,0.06) 0 1px 0,rgba(255,255,255,0.1) 0 1px 0 0 inset;
+	align-items: flex-start;
+	-webkit-rtl-ordering: logical;
+	-webkit-appearance: push-button;
+	-webkit-writing-mode: horizontal-tb;
+    -webkit-user-select: none;
+	text-rendering: auto;   
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;   
+    white-space: pre;
+	cursor:pointer;
+}
+select{
+	cursor:pointer;
+}
+#UpdateFacultyDialog label{
+	font-size:16px;
+}
+#upload_form{
+	padding-bottom:15px;
+}
+.widget{
+    display: block;
+    -webkit-margin-start: 2px;
+    -webkit-margin-end: 2px;
+    -webkit-padding-before: 0.35em;
+    -webkit-padding-start: 0.75em;
+    -webkit-padding-end: 0.75em;
+    -webkit-padding-after: 0.625em;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+	width:242px;
+}
+#msg{
+color:red; 
+margin:15px auto 0px;
+width:1000px;
+word-wrap:break-word;
+}
+#Conversion label,select{
+	line-height:30px;
+}
+#Project label,select{
+	line-height:30px;
+}
+.vm{
+	display: inline-block;
+    width: 14px;
+    height: 20px;
+    background: no-repeat url(/images/ui-icons_777777_256x240.png) -96px -128px;
+    vertical-align: middle;
+    cursor: pointer;
+	
+}
+.rcv{
+    text-align: left;
+    white-space: nowrap;
+	cursor: pointer;
+	font-weight:bold;
+	
+}
+.revlabel{
+	width:70px;
+	float:left;
+	line-height:20px;
+	margin:10px 0 0 15px;
+}
+#Receiver{
+	padding-left:15px;
+	padding-top:10px;
+}
+#Receiver div{
+	line-height:20px;
+	text-align:center;
+	float:left;
+	margin-right:10px;
+}
+.rcv:hover {
+    color: #777;
+	border-bottom:1px solid #777
+}
+.noshow{
+	display:none;
+}
+.subject{
+	clear:both;
+	line-height:20px;
+}
+.subject span{
+	font-weight: bold;
+    float: left;
+    margin-left: 15px;
+}
+.subject input{
+	margin-left: 17px;
+	float:left;
+	width:898px;
+}
+.contain button{
+	float:left;
+	margin-left:10px;
+	margin-bottom:10px;
+}

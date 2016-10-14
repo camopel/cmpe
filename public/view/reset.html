@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Computer Engineering Department</title>
+<link href="/stylesheets/reset.css" type="text/css" rel="stylesheet">
+<script src="/javascripts/jquery.js"></script>
+<script>
+$(document).ready(function(){
+  $("#reset-button").click(function(){
+	if($('#SJSUID').val()=="")  $('#msg').text("Inputs can not be blank!");
+	else{
+		$.ajax({
+			url: '/reset',
+			type: 'post',
+			dataType: 'json',
+			data: $('form#reset-form').serialize(),
+			success: function(data) {
+						$('#msg').text(data.msg);
+						if(data.success=='true')
+						{
+							setTimeout(function(){
+								window.location = data.redirectpage;
+							},3000);
+						}
+					}
+		});
+	}
+  });
+});
+</script>
+</head>
+<body>
+<h1>Retrieve Your Password</h1>
+<div id="reset-box">
+	<div>
+		<form action="" method="post" id="reset-form" autocomplete="off">
+			<fieldset style="border:0px">
+				<legend><strong>SJSU ID</strong></legend>
+				<input type="text" value="" name="SJSUID" id="SJSUID" class="forminput" spellcheck="false">							
+			</fieldset>
+		</form>
+	</div>
+	<div class="reset-submit"><button id="reset-button">Retrieve</button></div>
+</div>
+<div id="msg"></div>
+
+</body>
+</html>

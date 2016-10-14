@@ -1,0 +1,94 @@
+body {
+    background: #fff;
+	color: #333;
+    font-family: Arial,Helvetica,sans-serif;	
+	font-size:13px;
+}
+div {
+    display: block;
+	margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+h1{
+	text-align: center;
+    color: #555;
+    font-size: 38px;
+    font-weight: 300;   
+}
+#reset-box{
+	border-style: solid;
+    border-color: #c8c8c8;
+    border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(160,160,160,0.2) inset;
+	-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+	margin: 0 auto;
+	padding: 25px;
+	background: #f9f9f9;;
+	width:360px;
+}
+.forminput{
+	height: 25px;
+    padding: 3px;
+    margin: 2px 0 0;
+    width: 280px;
+	max-height: none;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+	border-width: 1px;
+    border-style: solid;
+    border-color: #c8c8c8;
+    border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(160,160,160,0.2) inset;
+	-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#reset-box legend{
+	margin-top:15px;
+}
+strong{
+	font-size:14px;
+}
+.reset-submit{
+	margin:30px auto 0px;
+	height:30px;
+	width:120px;
+}
+#reset-button{
+    width: 120px;
+	min-width: 100px;
+	line-height: 30px;
+    overflow: visible;
+    height: 30px;	
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;	
+	box-shadow: rgba(0,0,0,0.06) 0 1px 0,rgba(255,255,255,0.1) 0 1px 0 0 inset;
+	align-items: flex-start;
+	-webkit-rtl-ordering: logical;
+	-webkit-appearance: push-button;
+	-webkit-writing-mode: horizontal-tb;
+    -webkit-user-select: none;
+	text-rendering: auto;   
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    white-space: pre;
+}
+#msg{
+color:red; 
+margin:0 auto; 
+width:360px; 
+font-size:13px;
+word-wrap:break-word;
+}

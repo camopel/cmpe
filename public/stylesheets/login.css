@@ -1,0 +1,130 @@
+body {
+    background: #fff;
+	color: #5e5e5e;
+    font-family: Arial,Helvetica,sans-serif;    
+}
+div {
+    display: block;
+	margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+#signin-box{     
+	padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #e6e6e6;
+	vertical-align: baseline; 
+	margin:100px auto 0;
+	width:258px;
+	border-radius:6px!important;;
+}
+
+#signin-box legend {
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 20px;
+    padding: 0 0 15px;
+    display: inline;
+	color: #0074b3;
+}
+
+#signin-box label {
+    color: #5e5e5e;
+	display: block;
+    font-weight: normal;
+    opacity: 1;
+    word-wrap: break-word;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 7px 0 0;
+    clear: both;
+}
+
+.forminput {
+    height: 25px;
+    padding: 3px;
+    margin: 2px 0 0;
+    width: 232px;
+    max-height: none;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+	border-width: 1px;
+    border-style: solid;
+    border-color: #c8c8c8;
+    border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(160,160,160,0.2) inset;
+	-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#signin-button{
+    width: 120px;
+	min-width: 100px;
+	line-height: 30px;
+    overflow: visible;
+    height: 30px;
+    margin: 10px 0px;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;	
+	box-shadow: rgba(0,0,0,0.06) 0 1px 0,rgba(255,255,255,0.1) 0 1px 0 0 inset;
+	align-items: flex-start;
+	-webkit-rtl-ordering: logical;
+	-webkit-appearance: push-button;
+	-webkit-writing-mode: horizontal-tb;
+    -webkit-user-select: none;
+	text-rendering: auto;   
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    white-space: pre;
+}
+.remember-label{
+	line-height: 18px;
+	padding: 0;
+	color: #5e5e5e!important;
+	clear: both;
+	word-wrap: break-word;
+	display: block;
+	float: right;
+    margin: 10px 10px 0 0 !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+	opacity: 1;
+	border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+#help-links{
+	clear: left;
+	padding:0px 15px;
+	width:180px;
+	margin:0 auto;	
+}
+.link-separator {
+	padding: 0 0.2em;
+    font-size: 1.3em;
+    color: #8db0c2;
+}
+#help-links a{
+	color: #0074b3;	
+	font-size: 13px;
+}
+#help-links a:hover {
+    text-decoration: underline;	
+}
+#msg{
+color:red; 
+margin:0 auto; 
+width:300px; 
+font-size:13px;
+word-wrap:break-word;
+}

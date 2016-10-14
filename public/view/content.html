@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Computer Engineering Department</title>
+<link type="text/css" rel="stylesheet" href="/stylesheets/jquery-ui.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/content.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/filer.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/content.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/te.css">
+<script src="/javascripts/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/filer.js" type="text/javascript"></script>
+<script src="/javascripts/faculty.js" type="text/javascript"></script>
+<script src="/javascripts/upload.js" type="text/javascript"></script>
+<script src="/javascripts/conversion.js" type="text/javascript"></script>
+<script src="/javascripts/project.js" type="text/javascript"></script>
+<script src="/javascripts/te.js" type="text/javascript"></script>
+<script src="/javascripts/email.js" type="text/javascript"></script>
+<script>
+$(function(){
+	$(document).tooltip();
+	Upload.initial();	
+	Faculty.initial();	
+	Conversion.initial();	
+	Project.initial();
+	Email.initial();
+	$('#EmailEditor').jqte();
+	$("#tabs").tabs({
+		beforeActivate: function( event, ui ){
+			$('#msg').text("");
+			if(ui.newPanel[0].id=="Faculty") Faculty.create();
+			else if(ui.newPanel[0].id=="Conversion") Conversion.create();
+			else if(ui.newPanel[0].id=="Project") Project.create();
+			else if(ui.newPanel[0].id=="Email") Email.create();
+		},
+		create: function( event, ui ){
+			$.ajax({
+				url: "/login/test",
+				type: 'get',
+				data: "",       
+				success: function (data) {			
+					if(data.redirectpage!=null) window.location = data.redirectpage;
+				}
+			});
+		}
+	});
+});
+</script>
+</head>
+<body>
+<div class="banner"><img src="/images/head.gif"></div>
+<div id="msg"></div>
+<div id="tabs">
+	<ul>
+		<li><a href="#Upload">Upload</a></li>
+		<li><a href="#Faculty">Faculty</a></li>
+		<li><a href="#Conversion">Conversion</a></li>
+		<li><a href="#Project">Project</a></li>
+		<li><a href="#Email">Email</a></li>
+	</ul>
+	
+	<div id="Upload" style="padding-left:15px;">
+		<form id="upload_form" enctype="multipart/form-data">		
+			<fieldset class="widget">
+				<legend>Select a type of data: </legend>
+				<label for="radio1">Faculty</label>
+				<input type="radio" name="upload_for" id="radio1" value="Faculty" checked="checked">
+				<label for="radio2">Conversion</label>
+				<input type="radio" name="upload_for" id="radio2" value="Conversion">
+				<label for="radio3">Project</label>
+				<input type="radio" name="upload_for" id="radio3" value="Project">
+			</fieldset>
+			
+			<input type="file" name="upload_file" id="upload_file" multiple="multiple" accept=".xlsx,.xls">
+			<input type="submit" value="Upload" class="ctrlBtn">			
+		</form>
+	</div>
+	
+	<div id="Faculty" style="display:none">
+		<div class="contain ui-widget">
+			<button id="BtnUpdateFaculty" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
+			<button id="BtnAddFaculty" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
+			<button id="BtnDelFaculty" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
+			<table class="ui-widget ui-widget-content">
+				<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:200px;">SJSU ID</th><th style="width:200px;">Name</th><th>Email</th></tr></thead>
+				<tbody id="FacultyTable"></tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div id="Conversion" class="noshow">
+		<div class="contain ui-widget">
+			<button id="BtnUpdateConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
+			<button id="BtnAddConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
+			<button id="BtnDelConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
+			<label style="float:left;margin-left:50px;">Academic Year</label>		
+			<select id="ct_year" style="margin-left:5px;float:left;width:70px;">
+				<option value="">All</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+			</select>
+			<label style="float:left;margin-left:10px;">Semester</label>
+			<select id="ct_semester" style="float:left;width:90px;margin-left:5px;">
+				<option value="">All</option>
+				<option value="Winter">Winter</option>
+				<option value="Spring">Spring</option>
+				<option value="Summer">Summer</option>
+				<option value="Fall">Fall</option>
+			</select>
+			<label style="margin-right:20px;float:right;" id="ct_totalconv"></label>
+			<label style="float:right;margin-right:5px;">Total Conversion:</label>			
+			<table class="ui-widget ui-widget-content">
+				<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:200px;">Name</th><th style="width:100px;">Semester</th><th style="width:100px;">Conversion</th><th>Comments</th></tr></thead>
+				<tbody id="ConversionTable"></tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div id="Project" class="noshow">
+		<div class="contain ui-widget">	
+			<button id="BtnUpdateProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
+			<button id="BtnAddProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
+			<button id="BtnDelProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
+			<label style="float:left;margin-left:50px;">Academic Year</label>	
+			<select id="pt_year" style="margin-left:5px;float:left;width:70px;">
+				<option value="">All</option>
+				<option value="2013">2013</option>
+				<option value="2014">2014</option>
+				<option value="2015">2015</option>
+				<option value="2016">2016</option>
+				<option value="2017">2017</option>
+			</select>
+			<label style="float:left;margin-left:10px;">Semester</label>
+			<select id="pt_semester" style="float:left;width:90px;margin-left:5px;">
+				<option value="">All</option>
+				<option value="Winter">Winter</option>
+				<option value="Spring">Spring</option>
+				<option value="Summer">Summer</option>
+				<option value="Fall">Fall</option>
+			</select>
+			<label style="margin-right:20px;float:right;" id="pt_totalpi"></label>
+			<label style="float:right;margin-right:5px;">Total Points:</label>
+			<table class="ui-widget ui-widget-content">
+				<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:120px;">Advisor Name</th><th style="width:90px;">Semester</th><th style="width:30px;">Program</th><th style="width:120px;">Industry Advisor</th><th style="width:120px!important;">Student</th><th style="width:30px;">#</th><th>Project Title</th><th style="width:80px;">Point Value</th></tr></thead>
+				<tbody id="ProjectTable"></tbody>
+			</table>
+		</div>
+	</div>	
+
+	<div id="Email" class="noshow" style="padding-bottom:50px;">
+		<div class="revlabel"><span class="rcv" title="Click to choose receivers">Receiver:</span></div>	
+		<div id="Receiver"></div>
+		<div class="subject">
+			<span>Subject:</span>
+			<input type="text">
+		</div>
+		<textarea id="EmailEditor" name="EmailEditor" class="jqte"></textarea>
+		<div>
+			<span style="color:gray;font-size:12px;float:left;width:850px;margin:5px 15px;"><strong>*Hint:</strong>#fullname# #lastname# #totalpoints# will be replaced in email body</span>
+			<button type="button" class="ctrlBtn" style="float:right;margin:10px 15px;">Send</button>
+		</div>		
+	</div>
+</div>
+
+<div id="UpdateFacultyDialog" title="Update" class="noshow">
+  <p class="validateTips">All fields are required</p>
+  <form id="fd_form">
+    <fieldset>
+	  <input type="text" name="fd_id" id="fd_id" style="display:none">
+      <label for="fd_lastname">Last Name</label>
+      <input type="text" name="fd_lastname" id="fd_lastname" class="text ui-widget-content ui-corner-all">
+	  <label for="fd_firstname">Frist Name</label>
+      <input type="text" name="fd_firstname" id="fd_firstname" class="text ui-widget-content ui-corner-all">
+      <label for="fd_sjsuid">SJSU ID</label>
+      <input type="text" name="fd_sjsuid" id="fd_sjsuid" class="text ui-widget-content ui-corner-all">
+	  <label for="fd_email">Email</label>
+      <input type="text" name="fd_email" id="fd_email" class="text ui-widget-content ui-corner-all">      
+      <input type="submit" style="position:absolute; top:-1000px;display:none">
+    </fieldset>
+  </form>
+</div>
+
+<div id="UpdateConversionDialog" title="Update" class="noshow">
+  <p class="validateTips">All fields are required</p>
+  <form id="cd_form">
+    <fieldset>
+		<input type="text" name="cd_id" id="cd_id" style="display:none">
+		<label for="cd_name">Name</label>
+		<input type="text" name="cd_name" id="cd_name" class="text ui-widget-content ui-corner-all" readonly style="background-color:#ddd">
+		<label for="cd_sjsuid">SJSU ID</label>
+		<input type="text" name="cd_sjsuid" id="cd_sjsuid" class="text ui-widget-content ui-corner-all">
+		<label for="cd_year">Academic Year</label>		
+		<select name="cd_year" id="cd_year" class="text ui-widget-content ui-corner-all">
+			<option value="213">2013</option>
+			<option value="214">2014</option>
+			<option value="215">2015</option>
+			<option value="216">2016</option>
+			<option value="217">2017</option>
+		</select>
+		<label for="cd_season">Semester</label>
+		<select name="cd_season" id="cd_season" class="text ui-widget-content ui-corner-all">
+			<option value="1">Winter</option>
+			<option value="2">Spring</option>
+			<option value="3">Summer</option>
+			<option value="4">Fall</option>
+		</select>		
+		<label for="cd_conv">Conversion</label>
+		<input type="text" name="cd_conv" id="cd_conv" class="text ui-widget-content ui-corner-all">
+		<label for="cd_comment">Comment</label>
+		<textarea name="cd_comment" id="cd_comment" cols="40" rows="5" class="text ui-widget-content ui-corner-all"></textarea>		
+		<input type="submit" style="position:absolute; top:-1000px;display:none">
+    </fieldset>
+  </form>
+</div>
+
+<div id="UpdateProjectDialog" title="Update" class="noshow">
+  <p class="validateTips">All fields are required</p>
+  <form id="pd_form">
+    <fieldset>
+		<input type="text" name="pd_id" id="pd_id" style="display:none">
+		<label for="pd_name">Name</label>
+		<input type="text" name="pd_name" id="pd_name" class="text ui-widget-content ui-corner-all" readonly style="background-color:#ddd">
+		<label for="pd_sjsuid">SJSU ID</label>
+		<input type="text" name="pd_sjsuid" id="pd_sjsuid" class="text ui-widget-content ui-corner-all">
+		<label for="pd_year">Academic Year</label>		
+		<select name="pd_year" id="pd_year" class="text ui-widget-content ui-corner-all">
+			<option value="213">2013</option>
+			<option value="214">2014</option>
+			<option value="215">2015</option>
+			<option value="216">2016</option>
+			<option value="217">2017</option>
+		</select>
+		<label for="pd_season">Semester</label>
+		<select name="pd_season" id="pd_season" class="text ui-widget-content ui-corner-all">
+			<option value="1">Winter</option>
+			<option value="2">Spring</option>
+			<option value="3">Summer</option>
+			<option value="4">Fall</option>
+		</select>		
+		<label for="pd_program">Program</label>
+		<input type="text" name="pd_program" id="pd_program" class="text ui-widget-content ui-corner-all">
+		<label for="pd_industry">Industry Advisor</label>
+		<input type="text" name="pd_industry" id="pd_industry" class="text ui-widget-content ui-corner-all">
+		<label for="pd_student">Student</label>
+		<input name="pd_student" id="pd_student" class="text ui-widget-content ui-corner-all">		
+		<label for="pd_code">#</label>
+		<input type="text" name="pd_code" id="pd_code" class="text ui-widget-content ui-corner-all">
+		<label for="pd_project">Project</label>
+		<textarea name="pd_project" id="pd_project" cols="40" rows="3" class="text ui-widget-content ui-corner-all"></textarea>	
+		<label for="pd_points">Point Value</label>
+		<input type="text" name="pd_points" id="pd_points" class="text ui-widget-content ui-corner-all">  		
+		<input type="submit" style="position:absolute; top:-1000px;display:none">
+    </fieldset>
+  </form>
+</div>
+
+<div id="EmailDialog" title="Receivers" class="noshow">
+	<table class="ui-widget ui-widget-content" style="width:100%">
+		<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:200px;">Name</th><th>Email</th></tr></thead>
+		<tbody id="EmailTable"></tbody>
+	</table>
+</div>
+</body>
+</html>
