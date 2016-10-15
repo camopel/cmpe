@@ -48,11 +48,6 @@ MongoClient.connect(app.locals.dburl, function(err, db){
 	app.use('/eml', _eml(db));
 	var _user = require('./routes/user');
 	app.use('/user', _user(db));
-	
-	var _setup = require('./routes/setup');
-	app.use('/setup', _setup);
-	var _test = require('./routes/test');
-	app.use('/test', _test);
 });
 
 var http = require('http');
