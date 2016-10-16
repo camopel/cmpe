@@ -13,7 +13,6 @@ module.exports = function(receivers,sub,body,callback){
 	var mailOptions = {
 		from: '"CMPE SJSU" <adm.cmpe.sjsu@gmail.com>',
 		to: receivers,
-		replyTo:'xiao.su@sjsu.edu',
 		subject: sub,						
 		html: body
 	};
