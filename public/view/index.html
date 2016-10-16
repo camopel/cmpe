@@ -35,7 +35,7 @@ function getCookie(c_name)
 }
 function semester2String(s)
 {
-	return (s.charAt(0)+"0"+s.substring(1,3)+" "+Conversion.dict[s.charAt(3)]);
+	return Conversion.dict[s.charAt(3)]+" "+s.charAt(0)+"0"+s.substring(1,3);
 }
 function updateTotal(t){
 	var sum=0;
@@ -51,7 +51,7 @@ function ysChange(e){
 	var id = e.target.parentElement.parentElement.id;
 	$("#"+id+"Table tr").each(function(i,row){
 		var tdtxt = $(row).children("td.ys").text();
-		var tartxt = $("#"+id+"_year").val()+" "+$("#"+id+"_semester").val();
+		var tartxt = $("#"+id+"_semester").val()+" "+$("#"+id+"_year").val();
 		if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 		else $(row).css("display","none");
 	});
@@ -98,7 +98,7 @@ $(function(){
 				$("#Conversion select").change(ysChange);
 				//project
 				rawdata.proj.forEach(function(row){					
-					$("#ProjectTable").append('<tr><td class="ys">'+semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry_advisor+'</td><td>'+row.students.join("</br></br>")+'</td><td>'+row.code+'</td><td>'+row.project+'</td><td class="vl">'+row.points+'</td></tr>');
+					$("#ProjectTable").append('<tr><td class="ys">'+semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry_advisor+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="vl">'+row.points+'</td></tr>');
 				});
 				updateTotal("Project");
 				$("#Project select").change(ysChange);
@@ -141,6 +141,7 @@ $(function(){
 			<label style="float:left;margin-left:5px;">Academic Year</label>		
 			<select id="Conversion_year" style="margin-left:5px;float:left;width:70px;">
 				<option value="">All</option>
+				<option value="2013">2013</option>
 				<option value="2014">2014</option>
 				<option value="2015">2015</option>
 				<option value="2016">2016</option>
@@ -149,10 +150,10 @@ $(function(){
 			<label style="float:left;margin-left:10px;">Semester</label>
 			<select id="Conversion_semester" style="float:left;width:90px;margin-left:5px;">
 				<option value="">All</option>
-				<option value="winter">Winter</option>
-				<option value="spring">Spring</option>
-				<option value="summer">Summer</option>
-				<option value="fall">Fall</option>
+				<option value="Winter">Winter</option>
+				<option value="Spring">Spring</option>
+				<option value="Summer">Summer</option>
+				<option value="Fall">Fall</option>
 			</select>
 			<label style="margin-right:20px;float:right;" id="totalConversion"></label>
 			<label style="float:right;margin-right:5px;">Total Conversion:</label>			
@@ -168,6 +169,7 @@ $(function(){
 			<label style="float:left;margin-left:5px;">Academic Year</label>	
 			<select id="Project_year" style="margin-left:5px;float:left;width:70px;">
 				<option value="">All</option>
+				<option value="2013">2013</option>
 				<option value="2014">2014</option>
 				<option value="2015">2015</option>
 				<option value="2016">2016</option>
@@ -176,15 +178,15 @@ $(function(){
 			<label style="float:left;margin-left:10px;">Semester</label>
 			<select id="Project_semester" style="float:left;width:90px;margin-left:5px;">
 				<option value="">All</option>
-				<option value="winter">Winter</option>
-				<option value="spring">Spring</option>
-				<option value="summer">Summer</option>
-				<option value="fall">Fall</option>
+				<option value="Winter">Winter</option>
+				<option value="Spring">Spring</option>
+				<option value="Summer">Summer</option>
+				<option value="Fall">Fall</option>
 			</select>
 			<label style="margin-right:20px;float:right;" id="totalProject"></label>
 			<label style="float:right;margin-right:5px;">Total Points:</label>
 			<table class="ui-widget ui-widget-content">
-				<thead><tr class="ui-widget-header"><th style="width:70px;">Semester</th><th style="width:30px;">Program</th><th style="width:120px;">Industry Advisor</th><th style="width:150px;">Students</th><th style="width:30px;">#</th><th style="width:200px;">Project Title</th><th style="width:80px;">Point Value</th></tr></thead>
+				<thead><tr class="ui-widget-header"><th style="width:70px;">Semester</th><th style="width:30px;">Program</th><th style="width:120px;">Industry Advisor</th><th style="width:150px;">Student</th><th style="width:200px;">Project Title</th><th style="width:80px;">Point Value</th></tr></thead>
 				<tbody id="ProjectTable"></tbody>
 			</table>
 		</div>
