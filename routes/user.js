@@ -47,7 +47,7 @@ module.exports =  function(db){
 				if(req.query.password!="000000") u.password = req.query.password;
 				db.collection('users').updateOne({"sjsuid":id},{$set:u},{},function(err, r){
 					if(err!=null) res.send({"success":"false","msg":err});
-					else res.send({"success":"true"});					
+					else res.send({"success":"true","msg":"success"});					
 				});
 			}			
 		}
