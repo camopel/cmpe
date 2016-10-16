@@ -38,15 +38,32 @@ function updateTotal(t){
 	});
 	$("#total"+t).text(sum.toFixed(f));
 }
+function updateTotalBalance(){
+	var convSum=0;
+	var projSum=0;
+	var balSum=0;
+	$("#BalanceTable tr.dataRow").each(function(i,row){
+		if($(row).css('display') != 'none'){
+			projSum+=parseFloat($(row).children("td.dataProj").text());
+			convSum+=parseFloat($(row).children("td.dataConv").text());
+			balSum+=parseFloat($(row).children("td.dataBal").text());
+		}			
+	});
+	$("#projTotal").text(projSum.toFixed(6));
+	$("#convTotal").text(convSum.toFixed(2));
+	$("#BalTotal").text(balSum.toFixed(2));
+	
+}
 function ysChange(e){
 	var id = e.target.parentElement.parentElement.id;
-	$("#"+id+"Table tr").each(function(i,row){
+	$("#"+id+"Table tr.dataRow").each(function(i,row){
 		var tdtxt = $(row).children("td.ys").text();
 		var tartxt = $("#"+id+"_semester").val()+" "+$("#"+id+"_year").val();
 		if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 		else $(row).css("display","none");
 	});
-	updateTotal(id);		
+	if(id=="Balance") updateTotalBalance();
+	else updateTotal(id);	
 }
 var rawdata = null;
 function infoUpdate(){
@@ -103,8 +120,11 @@ $(function(){
 					total[row.semester]["proj"]+=parseFloat(row.points);
 				});
 				for(smes in total){
-					$("#BalanceTable").append('<tr><td class="ys">'+semester2String(smes)+'</td><td>'+total[smes].proj.toFixed(6)+'</td><td>'+total[smes].conv.toFixed(2)+'</td></tr>');
+					total[smes]["balance"]= total[smes].conv+total[smes].proj;
+					$("#BalanceTable").append('<tr class="dataRow"><td class="ys">'+semester2String(smes)+'</td><td class="dataProj">'+total[smes].proj.toFixed(6)+'</td><td class="dataConv">'+total[smes].conv.toFixed(2)+'</td><td class="dataBal">'+total[smes].balance.toFixed(2)+'</td></tr>');
 				}
+				$("#BalanceTable").append('<tr class="totalbalance"><td>Total</td><td id="projTotal"></td><td id="convTotal"></td><td id="BalTotal"></td></tr>');
+				updateTotalBalance();
 				$("#Balance select").change(ysChange);
 			}else $('#msg').text(data.msg);
 		}
@@ -160,7 +180,7 @@ $(function(){
 				<option value="Fall">Fall</option>
 			</select>			
 			<table class="ui-widget ui-widget-content">
-				<thead><tr class="ui-widget-header"><th style="width:300px;">Semester</th><th style="width：350px;">Accumulation Point</th><th>Conversion Point</th></tr></thead>
+				<thead><tr class="ui-widget-header"><th>Semester</th><th>Project Accumulation Point</th><th>Conversion Point</th><th>Semester Balance</th></tr></thead>
 				<tbody id="BalanceTable"></tbody>
 			</table>
 		</div>

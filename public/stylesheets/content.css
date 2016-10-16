@@ -180,3 +180,6 @@ word-wrap:break-word;
 	margin-left:10px;
 	margin-bottom:10px;
 }
+.totalbalance td{
+	font-weight:bold;
+}
