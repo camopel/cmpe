@@ -63,7 +63,7 @@ var Email = {
 		Email.ed_dialog = $( "#EmailDialog" ).dialog({
 		  autoOpen: false,
 		  height: 500,
-		  width: 560,
+		  width: 350,
 		  modal: true,
 		  buttons: {
 			"Toggle All":Email.toggleAll,
@@ -95,13 +95,6 @@ var Email = {
 		});
 	},
 	create:function(){
-		// $.ajax({
-			// url: '/faculty',
-			// type: 'get',
-			// data: "cmd=maillist",
-			// success: function(data){
-				// if(data.success=='true') Email.MailList=data.data;
-			// }
-		// });
+		
 	}
 };
