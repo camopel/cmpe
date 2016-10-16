@@ -28,7 +28,6 @@ module.exports =  function(db){
 								"program":row.program,
 								"industry":row.industry_advisor,
 								"student":row.student,
-								"code":row.code,
 								"project":row.project,
 								"points":row.points
 							});
@@ -38,7 +37,7 @@ module.exports =  function(db){
 							else{
 								var users = {};
 								for(var i=0;i<us.length;i++){
-									users[us[i].sjsuid]=us[i].lastname+" "+us[i].firstname;							
+									users[us[i].sjsuid]=us[i].lastname+","+us[i].firstname;							
 								}
 								for(var i=0;i<list.length;i++){
 									list[i]["name"] = users[list[i].sjsuid];
@@ -63,7 +62,6 @@ module.exports =  function(db){
 					"program":req.query.pd_program,
 					"industry_advisor":req.query.pd_industry,
 					"student":req.query.pd_student,
-					"code":req.query.pd_code,
 					"project":req.query.pd_project,
 					"points":req.query.pd_points,
 					"updatetime":new Date()
@@ -86,7 +84,6 @@ module.exports =  function(db){
 					program:req.query.pd_program.trim(),
 					industry_advisor:req.query.pd_industry.trim(),					
 					student:req.query.pd_student.trim()==""?"N/A":req.query.pd_student.trim(),
-					code:req.query.pd_code.trim(),
 					project:req.query.pd_project.trim()==""?"N/A":req.query.pd_project.trim(),
 					points:req.query.pd_points.trim()==""?"0":req.query.pd_points.trim()
 				};

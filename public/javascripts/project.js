@@ -12,7 +12,6 @@ var Project={
 	pd_program:null,
 	pd_industry:null,
 	pd_student:null,
-	pd_code:null,
 	pd_project:null,
 	pd_points:null,	
 	pd_allFields:null,
@@ -38,7 +37,7 @@ var Project={
 					Project.RawData = data.data;
 					Project.UserDict = data.users;
 					data.data.forEach(function(row){
-						$("#ProjectTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Project.semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry+'</td><td>'+row.student+'</td><td>'+row.code+'</td><td>'+row.project+'</td><td class="pi">'+row.points+'</td></tr>');
+						$("#ProjectTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Project.semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="pi">'+row.points+'</td></tr>');
 					});
 					
 					$("#ProjectTable").find('tr').click(function(ev) {
@@ -67,7 +66,6 @@ var Project={
 		Project.pd_allFields.removeClass( "ui-state-error" );
 		valid = valid && Project.checkLength( Project.pd_program, "Program");
 		valid = valid && Project.checkLength( Project.pd_student, "student");
-		valid = valid && Project.checkLength( Project.pd_code, "#");
 		valid = valid && Project.checkLength( Project.pd_project, "Project Title");
 		valid = valid && Project.checkLength( Project.pd_points, "Point Value");
 		valid = valid && Project.checkLength( Project.pd_sjsuid, "SJSU ID");	
@@ -87,12 +85,11 @@ var Project={
 					Project.RawData[Project.LastSelectedRow].program=Project.pd_program.val();
 					Project.RawData[Project.LastSelectedRow].industry=Project.pd_industry.val();
 					var student = Project.RawData[Project.LastSelectedRow].student=Project.pd_student.val();
-					Project.RawData[Project.LastSelectedRow].code=Project.pd_code.val();
 					Project.RawData[Project.LastSelectedRow].project=Project.pd_project.val();
 					Project.RawData[Project.LastSelectedRow].points=Project.pd_points.val();					
 							
-					var lastrow = $('#ProjectTable tr:eq(' + Project.LastSelectedRow + ')');					
-					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+Project.semester2String(semester)+'</td><td>'+Project.pd_program.val()+'</td><td>'+Project.pd_industry.val()+'</td><td>'+student+'</td><td>'+Project.pd_code.val()+'</td><td>'+Project.pd_project.val()+'</td><td class="pi">'+Project.pd_points.val()+'</td>');
+					var lastrow = $('#ProjectTable tr:eq(' + Project.LastSelectedRow + ')');
+					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+Project.semester2String(semester)+'</td><td>'+Project.pd_program.val()+'</td><td>'+Project.pd_industry.val()+'</td><td>'+student+'</td><td>'+Project.pd_project.val()+'</td><td class="pi">'+Project.pd_points.val()+'</td>');
 					Project.updateTotal();
 					Project.pd_close();
 				}
@@ -132,7 +129,6 @@ var Project={
 			Project.pd_program.val(Project.RawData[Project.LastSelectedRow].program);
 			Project.pd_industry.val(Project.RawData[Project.LastSelectedRow].industry);			
 			Project.pd_student.val(Project.RawData[Project.LastSelectedRow].student);
-			Project.pd_code.val(Project.RawData[Project.LastSelectedRow].code);
 			Project.pd_project.val(Project.RawData[Project.LastSelectedRow].project);
 			Project.pd_points.val(Project.RawData[Project.LastSelectedRow].points);
 			Project.pd_dialog.dialog("open");
@@ -181,11 +177,10 @@ var Project={
 		Project.pd_sjsuid = $( "#pd_sjsuid" );		
 		Project.pd_program = $( "#pd_program" );
 		Project.pd_industry = $( "#pd_industry" );		
-		Project.pd_student = $( "#pd_student" );
-		Project.pd_code = $( "#pd_code" );		
+		Project.pd_student = $( "#pd_student" );	
 		Project.pd_project = $( "#pd_project" );
 		Project.pd_points = $( "#pd_points" );	
-		Project.pd_allFields = $([]).add(Project.pd_student).add(Project.pd_program).add(Project.pd_sjsuid).add(Project.pd_code).add(Project.pd_project).add(Project.pd_points);
+		Project.pd_allFields = $([]).add(Project.pd_student).add(Project.pd_program).add(Project.pd_sjsuid).add(Project.pd_project).add(Project.pd_points);
 		Project.pd_dialog = $( "#UpdateProjectDialog" ).dialog({
 		  autoOpen: false,
 		  height: 710,

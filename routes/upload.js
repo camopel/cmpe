@@ -46,48 +46,18 @@ module.exports =  function(db){
 		}
 		else if(dataType=="proj")
 		{
-			//var pre="";
 			for(var i=0;i<rows.length;i++)
 			{
-				var item = rows[i];
-				//if(item["project title"]!=null) pre = item["project title"].trim();				
+				var item = rows[i];			
 				ws.push({
 					sjsuid:item.sjsuid.trim(),
 					semester:item.semester.trim(),
 					program:item.program.trim(),
 					industry_advisor:item["industry advisor"]!=null?item["industry advisor"].trim():"",					
 					student:item.student.replace(","," ").trim(),
-					code:item.code!=null?item.code.trim():"",
 					project:item["project title"]!=null?item["project title"].trim():ws[ws.length-1]["project"],
 					points:item.points.trim()
 				});
-				/*
-				var pt = item["project title"]==null?"":item["project title"].trim();
-				if(pt==""||pt==pre)
-				{
-					if(item.student!=null) ws[ws.length-1].student.push(item.student.replace(","," ").trim());
-					//else console.log(item.sjsuid+"-"+item.semester);
-				}
-				else
-				{
-					pre=pt;
-					if(item.student==null)
-					{
-						console.log(item.sjsuid+"-"+item.semester);
-						continue;
-					}
-					ws.push({
-						sjsuid:item.sjsuid.trim(),
-						semester:item.semester.trim(),
-						program:item.program.trim(),
-						industry_advisor:item["industry advisor"]!=null?item["industry advisor"].trim():"",
-						//student:[item.student.replace(","," ").trim()],
-						student:item.student.replace(","," ").trim(),
-						code:item.code!=null?item.code.trim():"",
-						project:item["project title"]!=null?item["project title"].trim():"",
-						points:item.points.trim()
-					});
-				}*/
 			}
 		}		
 		return ws;
