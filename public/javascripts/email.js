@@ -23,12 +23,34 @@ var Email = {
 		Email.ed_close();
 	},
 	showDialog:function(){
-		$("#EmailTable").children('tr').each(function(i,row){
-			var name = $(row).children("td:eq(1)").text();
-			if(Email.SelectedMailList[name]!=null) $(row).children("td:eq(0)").addClass("checked");
-			else $(row).children("td:eq(0)").removeClass("checked");			
-		});
-		Email.ed_dialog.dialog("open");
+		$.ajax({
+			url: '/faculty',
+			type: 'get',
+			data: "cmd=maillist",
+			success: function(data){
+				if(data.success=='true')
+				{
+					$("#EmailTable").html("");
+					Email.MailList=data.data;
+					for (var key in data.data){
+						var eml = data.data[key];
+						$("#EmailTable").append( '<tr><td class="checkbox"></td><td>'+key+'</td></tr>');
+					}
+					$("#EmailTable").find('tr').click(function(ev){
+						var td = $(ev.target).get(0);
+						$(td).toggleClass('checked');
+					});
+					
+					$("#EmailTable").children('tr').each(function(i,row){
+						var name = $(row).children("td:eq(1)").text();
+						if(Email.SelectedMailList[name]!=null) $(row).children("td:eq(0)").addClass("checked");
+						else $(row).children("td:eq(0)").removeClass("checked");			
+					});
+					Email.ed_dialog.dialog("open");
+				}					
+				else $('#msg').text("Error, could not fetch mail list!!");
+			}
+		});		
 	},
 	ed_close:function(){
 		Email.ed_dialog.dialog( "close" );
@@ -71,28 +93,8 @@ var Email = {
 		  },
 		  close: Email.ed_close
 		});
-		$.ajax({
-			url: '/faculty',
-			type: 'get',
-			data: "cmd=maillist",
-			success: function(data){
-				if(data.success=='true')
-				{
-					Email.MailList=data.data;
-					for (var key in data.data){
-						var eml = data.data[key];
-						$("#EmailTable").append( '<tr><td class="checkbox"></td><td>'+key+'</td></tr>');
-					}
-					$("#EmailTable").find('tr').click(function(ev){
-						var td = $(ev.target).get(0);
-						$(td).toggleClass('checked');
-					});
-					$(".rcv").click(Email.showDialog);
-					$("#Email button").click(Email.send);
-				}					
-				else $('#msg').text("Could not user mail list,Please try later!");
-			}
-		});
+		$(".rcv").click(Email.showDialog);
+		$("#Email button").click(Email.send);		
 	},
 	create:function(){
 		
