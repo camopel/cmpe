@@ -66,6 +66,7 @@ function ysChange(e){
 	else updateTotal(id);	
 }
 var rawdata = null;
+/*
 function infoUpdate(){
 	$.ajax({
 		url: "/user",
@@ -76,8 +77,11 @@ function infoUpdate(){
 			$('#msg').text(data.msg);
 		}
 	});
-}
+}*/
 $(function(){
+	var idx = document.cookie.indexOf("sjsuid");	
+	if(idx==-1||document.cookie.substring(idx+7,idx+16)=="admin") window.location.href="login.html";
+	
 	$("#tabs").tabs({
 		beforeActivate: function( event, ui ){
 			$('#msg').text("");
@@ -96,7 +100,7 @@ $(function(){
 				$("#lastname").val(rawdata.info.lastname);
 				$("#firstname").val(rawdata.info.firstname);
 				$("#email").val(rawdata.info.email);
-				$("#Info button").click(infoUpdate);
+				//$("#Info button").click(infoUpdate);
 				//conversion
 				rawdata.conv.forEach(function(row){
 					$("#ConversionTable").append('<tr><td class="ys">'+semester2String(row.semester)+'</td><td class="vl">'+row.conversion+'</td><td>'+row.comment+'</td></tr>');
@@ -144,20 +148,20 @@ $(function(){
 	</ul>	
 	<div id="Info">		
 		<form style="width:300px;margin-left:360px;">
-			<fieldset>
+			<fieldset class="readonlyinfo">
 			  <label>SJSU ID</label>
-			  <input type="text" name="sjsuid" id="sjsuid" readonly style="background-color:#ddd" class="text ui-widget-content ui-corner-all">
+			  <input type="text" name="sjsuid" id="sjsuid" readonly class="text ui-widget-content ui-corner-all">
 			  <label>Last Name</label>
-			  <input type="text" name="lastname" id="lastname" class="text ui-widget-content ui-corner-all">
+			  <input type="text" name="lastname" id="lastname" readonly class="text ui-widget-content ui-corner-all">
 			  <label >Frist Name</label>
-			  <input type="text" name="firstname" id="firstname" class="text ui-widget-content ui-corner-all">			  
+			  <input type="text" name="firstname" id="firstname" readonly class="text ui-widget-content ui-corner-all">			  
 			  <label >Email</label>
-			  <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all">
-			  <label>Password</label>
-			  <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" value="000000">
+			  <input type="text" name="email" id="email" readonly class="text ui-widget-content ui-corner-all">
+			  <!--<label>Password</label>
+			  <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all" value="000000">-->
 			</fieldset>
 		</form>
-		<button class="ctrlBtn" style="margin:0px 0 10px 587px;">Update</button>
+		<!--<button class="ctrlBtn" style="margin:0px 0 10px 587px;">Update</button>-->
 	</div>
 	
 	<div id="Balance" class="noshow">

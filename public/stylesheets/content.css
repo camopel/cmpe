@@ -183,3 +183,6 @@ word-wrap:break-word;
 .totalbalance td{
 	font-weight:bold;
 }
+.readonlyinfo input{
+	background-color:#ddd;
+}

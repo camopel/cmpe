@@ -17,7 +17,9 @@
 <script src="/javascripts/te.js" type="text/javascript"></script>
 <script src="/javascripts/email.js" type="text/javascript"></script>
 <script>
-$(function(){
+$(function(){	
+	var idx = document.cookie.indexOf("sjsuid");	
+	if(idx==-1||document.cookie.substring(idx+7,idx+16)!="admin") window.location.href="login.html";
 	$(document).tooltip();
 	Upload.initial();	
 	Faculty.initial();	

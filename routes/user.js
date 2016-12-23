@@ -5,8 +5,7 @@ module.exports =  function(db){
 		if(!req.session || !req.session.login || req.session.sjsuid!=req.query.id)
 		{
 			var result = {
-				"success":"false",
-				"msg":"Not login as admin. Redirect to Login Page after 3 seconds",
+				"success":"false",				
 				"redirectpage":"/view/login.html"				
 			};
 			res.send(result);
@@ -37,6 +36,7 @@ module.exports =  function(db){
 					}					
 				});
 			}
+			/*
 			else if(req.query.cmd=="update"){
 				var u = {
 					"email":req.query.email,
@@ -49,7 +49,7 @@ module.exports =  function(db){
 					if(err!=null) res.send({"success":"false","msg":err});
 					else res.send({"success":"true","msg":"success"});					
 				});
-			}			
+			}*/	
 		}
 	});
 	return router;

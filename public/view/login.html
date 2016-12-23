@@ -14,8 +14,8 @@ $(document).ready(function(){
 	$("#signin-button").click(signin);
 	function signin()
 	{
-		if($('#sjsuid').val()==""||$('#password').val()=="") $('#msg').text("Email and Password can not be blank!");
-		else{
+		if($('#sjsueml').val()==""||$('#password').val()=="") $('#msg').text("Email and Password can not be blank!");
+		else if($('#sjsueml').val().toLowerCase()=="admin" || $('#sjsueml').val().toLowerCase().endsWith("@sjsu.edu")){
 			$('#msg').text("");
 			$.ajax({
 				url: '/login',
@@ -33,7 +33,8 @@ $(document).ready(function(){
 					}
 				}
 			});
-		}	
+		}
+		else $('#msg').text("Email is not right!");
 	}
   
 });
@@ -47,7 +48,7 @@ $(document).ready(function(){
 			<fieldset style="border:0px">
 				<legend> Sign In</legend>
 				<label>SJSU Email</label>
-				<input name="sjsuid" id="sjsuid" class="forminput" type="text" tabindex="1" value="">
+				<input name="sjsueml" id="sjsueml" class="forminput" type="text" tabindex="1" value="">
 				<label>Password</label>
 				<input name="password" id="password" type="password" class="forminput" autocomplete="off" tabindex="2" value="">
 				<input type="submit" style="position:absolute; top:-1000px">				
@@ -56,9 +57,9 @@ $(document).ready(function(){
 		<div style="width:120px; margin:0 auto;"><button id="signin-button">Sign In</button></div>
 	</div>
 	<div id="help-links">
-		<a href="/view/register.html">Register</a>
-		<span class="link-separator"> | </span>
-		<a href="/view/reset.html">Forgot password?</a>
+		<!--<a href="/view/register.html">Register</a>
+		<span class="link-separator"> | </span>-->
+		<a href="http://its.sjsu.edu/services/sjsuone/">Forgot password?</a>
 	</div>
 </div>
 <div id="msg"></div>
