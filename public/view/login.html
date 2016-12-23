@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$("#signin-button").click(signin);
 	function signin()
 	{
-		if($('#sjsuid').val()==""||$('#password').val()=="") $('#msg').text("ID and Password can not be blank!");
+		if($('#sjsuid').val()==""||$('#password').val()=="") $('#msg').text("Email and Password can not be blank!");
 		else{
 			$('#msg').text("");
 			$.ajax({
@@ -46,7 +46,7 @@ $(document).ready(function(){
 		<form action="" id="siginin-form" autocomplete="off">
 			<fieldset style="border:0px">
 				<legend> Sign In</legend>
-				<label>SJSU ID Number</label>
+				<label>SJSU Email</label>
 				<input name="sjsuid" id="sjsuid" class="forminput" type="text" tabindex="1" value="">
 				<label>Password</label>
 				<input name="password" id="password" type="password" class="forminput" autocomplete="off" tabindex="2" value="">

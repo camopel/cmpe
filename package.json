@@ -13,6 +13,7 @@
 	"mongodb":"~2.2.10",
 	"express-session":"~1.14.1",
 	"nodemailer":"2.6.4",
-	"express-fileupload":"0.0.5"
+	"express-fileupload":"0.0.5",
+        "ldap":"0.7.1"
   }
 }
