@@ -35,10 +35,9 @@ module.exports =  function(db){
 								if(err){res.send({"success":"false","msg":"Service fail!"});}
 								else{
 									data.on('searchEntry', function(entry){
-									//console.log('entry:'+JSON.stringify(entry.object));
-									//console.log(entry.object.sn+","+entry.object.givenName+","+entry.object.mail+","+entry.object.sAMAccountName);
+										//console.log('entry:'+JSON.stringify(entry.object));
 										var collection = db.collection('users');
-										collection.updateOne({"email":req.body.sjsueml},{$set:{
+										collection.updateOne({"sjsuid":entry.object.sAMAccountName},{$set:{
 											"email":entry.object.mail,
 											"lastname":entry.object.sn,
 											"firstname":entry.object.givenName,
@@ -55,7 +54,6 @@ module.exports =  function(db){
 											res.send({"success":"true","msg":"Login succeed","redirectpage":"/view/index.html"});
 										});
 									});
-									//res.on('end', function(){res.send({"success":"true","msg":"Login succeed","redirectpage":"/view/index.html"});});
 								}
 							});
 					}
@@ -69,6 +67,12 @@ module.exports =  function(db){
 			res.send({"redirectpage":"/view/login.html"});
 		}
 		else res.send({});
+	});
+	router.get('/logout', function(req, res, next) {
+		req.session.destroy();
+		req.session=null;
+		res.cookie('sjsuid',"",{ expires:new Date()});		
+		res.redirect("/view/login.html");
 	});
 	return router;
 }

@@ -56,9 +56,9 @@ function updateTotalBalance(){
 }
 function ysChange(e){
 	var id = e.target.parentElement.parentElement.id;
+	var tartxt = $("#"+id+"_semester").val()+" "+$("#"+id+"_year").val();
 	$("#"+id+"Table tr.dataRow").each(function(i,row){
-		var tdtxt = $(row).children("td.ys").text();
-		var tartxt = $("#"+id+"_semester").val()+" "+$("#"+id+"_year").val();
+		var tdtxt = $(row).children("td.ys").text();		
 		if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 		else $(row).css("display","none");
 	});
@@ -103,13 +103,13 @@ $(function(){
 				//$("#Info button").click(infoUpdate);
 				//conversion
 				rawdata.conv.forEach(function(row){
-					$("#ConversionTable").append('<tr><td class="ys">'+semester2String(row.semester)+'</td><td class="vl">'+row.conversion+'</td><td>'+row.comment+'</td></tr>');
+					$("#ConversionTable").append('<tr class="dataRow"><td class="ys">'+semester2String(row.semester)+'</td><td class="vl">'+row.conversion+'</td><td>'+row.comment+'</td></tr>');
 				});
 				updateTotal("Conversion");
 				$("#Conversion select").change(ysChange);
 				//project
 				rawdata.proj.forEach(function(row){
-					$("#ProjectTable").append('<tr><td class="ys">'+semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry_advisor+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="vl">'+row.points+'</td></tr>');
+					$("#ProjectTable").append('<tr class="dataRow"><td class="ys">'+semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry_advisor+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="vl">'+row.points+'</td></tr>');
 				});
 				updateTotal("Project");
 				$("#Project select").change(ysChange);
@@ -137,7 +137,7 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="banner"><img src="/images/head.gif"></div>
+<div class="banner"><img src="/images/head.gif"><div class="logout"><a href="/login/logout">Logout</a></div></div>
 <div id="msg"></div>
 <div id="tabs">
 	<ul>

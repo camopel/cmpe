@@ -23,8 +23,15 @@ div {
 
 .banner{
 	margin:0px auto;
-	width:738px;
+	width:1000px;
 	height:45px;
+}
+.banner img{
+	margin-left:130px; 
+}
+.logout{
+	margin-top:40px;
+	float:right;
 }
 .ui-draggable, .ui-droppable {background-position: top;	}
 label, input{ display:block; }
