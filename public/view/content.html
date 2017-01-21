@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Computer Engineering Department</title>
+<title>Admin - Upload</title>
 <link type="text/css" rel="stylesheet" href="/stylesheets/jquery-ui.css">
 <link type="text/css" rel="stylesheet" href="/stylesheets/content.css">
 <link type="text/css" rel="stylesheet" href="/stylesheets/filer.css">
@@ -14,6 +14,7 @@
 <script src="/javascripts/upload.js" type="text/javascript"></script>
 <script src="/javascripts/conversion.js" type="text/javascript"></script>
 <script src="/javascripts/project.js" type="text/javascript"></script>
+<script src="/javascripts/summary.js" type="text/javascript"></script>
 <script src="/javascripts/te.js" type="text/javascript"></script>
 <script src="/javascripts/email.js" type="text/javascript"></script>
 <script>
@@ -26,6 +27,7 @@ $(function(){
 	Conversion.initial();	
 	Project.initial();
 	Email.initial();
+	Summary.initial();
 	$('#EmailEditor').jqte();
 	$("#tabs").tabs({
 		beforeActivate: function( event, ui ){
@@ -34,6 +36,9 @@ $(function(){
 			else if(ui.newPanel[0].id=="Conversion") Conversion.create();
 			else if(ui.newPanel[0].id=="Project") Project.create();
 			else if(ui.newPanel[0].id=="Email") Email.create();
+			else if(ui.newPanel[0].id=="Summary") Summary.create();
+			
+			document.title = "Admin - "+ui.newPanel[0].id;
 		},
 		create: function( event, ui ){
 			$.ajax({
@@ -55,12 +60,13 @@ $(function(){
 <div id="tabs">
 	<ul>
 		<li><a href="#Upload">Upload</a></li>
+		<li><a href="#Summary">Summary</a></li>
 		<li><a href="#Project">Project</a></li>		
 		<li><a href="#Conversion">Conversion</a></li>
 		<li><a href="#Faculty">Faculty</a></li>
 		<li><a href="#Email">Email</a></li>
 	</ul>
-	
+		
 	<div id="Upload" style="padding-left:15px;">
 		<form id="upload_form" enctype="multipart/form-data">		
 			<fieldset class="widget">
@@ -71,14 +77,33 @@ $(function(){
 				<input type="radio" name="upload_for" id="radio2" value="Conversion">
 				<label for="radio3">Project</label>
 				<input type="radio" name="upload_for" id="radio3" value="Project">
-			</fieldset>
-			
+			</fieldset>			
 			<input type="file" name="upload_file" id="upload_file" multiple="multiple" accept=".xlsx,.xls">
 			<input type="submit" value="Upload" class="ctrlBtn">			
 		</form>
 	</div>
 	
-	<div id="Faculty" style="display:none">
+	<div id="Summary" class="noshow">
+		<div class="contain ui-widget">
+			<label style="float:left;margin-left:5px;line-height:30px;">Filter:</label>
+			<select id="Balance_condition" style="margin-left:5px;float:left;width:125px;" class="ui-widget-content ui-corner-all">
+				<option value="al">All</option>
+				<option value="ge">greater or equal</option>
+				<option value="gt">greater than</option>
+				<option value="eq">equal</option>
+				<option value="lt">less than</option>
+				<option value="le">less or equal</option>
+			</select>
+			<label style="float:left;margin-left:5px;line-height:30px;">Value:</label>
+			<input type="text" name="Balance_number" id="Balance_number" style="float:left;width:30px;margin-left:5px;" class="text ui-widget-content ui-corner-all" value="0">
+			<table class="ui-widget ui-widget-content">
+				<thead><tr class="ui-widget-header"><th style="width:500px">Name</th><th>Project Total Balance</th></tr></thead>
+				<tbody id="BalanceTable"></tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div id="Faculty" class="noshow">
 		<div class="contain ui-widget">
 			<button id="BtnUpdateFaculty" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
 			<button id="BtnAddFaculty" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
@@ -95,23 +120,8 @@ $(function(){
 			<button id="BtnUpdateConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
 			<button id="BtnAddConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
 			<button id="BtnDelConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
-			<label style="float:left;margin-left:50px;">Academic Year</label>		
-			<select id="ct_year" style="margin-left:5px;float:left;width:70px;">
-				<option value="">All</option>
-				<option value="2013">2013</option>
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				<option value="2016">2016</option>
-				<option value="2017">2017</option>
-			</select>
-			<label style="float:left;margin-left:10px;">Semester</label>
-			<select id="ct_semester" style="float:left;width:90px;margin-left:5px;">
-				<option value="">All</option>
-				<option value="Winter">Winter</option>
-				<option value="Spring">Spring</option>
-				<option value="Summer">Summer</option>
-				<option value="Fall">Fall</option>
-			</select>
+			<label style="float:left;margin-left:50px;">Semester</label>
+			<select id="ct_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
 			<label style="margin-right:20px;float:right;" id="ct_totalconv"></label>
 			<label style="float:right;margin-right:5px;">Total Conversion:</label>			
 			<table class="ui-widget ui-widget-content">
@@ -126,27 +136,12 @@ $(function(){
 			<button id="BtnUpdateProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
 			<button id="BtnAddProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
 			<button id="BtnDelProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
-			<label style="float:left;margin-left:50px;">Academic Year</label>	
-			<select id="pt_year" style="margin-left:5px;float:left;width:70px;">
-				<option value="">All</option>
-				<option value="2013">2013</option>
-				<option value="2014">2014</option>
-				<option value="2015">2015</option>
-				<option value="2016">2016</option>
-				<option value="2017">2017</option>
-			</select>
-			<label style="float:left;margin-left:10px;">Semester</label>
-			<select id="pt_semester" style="float:left;width:90px;margin-left:5px;">
-				<option value="">All</option>
-				<option value="Winter">Winter</option>
-				<option value="Spring">Spring</option>
-				<option value="Summer">Summer</option>
-				<option value="Fall">Fall</option>
-			</select>
+			<label style="float:left;margin-left:50px;">Semester</label>
+			<select id="pt_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
 			<label style="margin-right:20px;float:right;" id="pt_totalpi"></label>
 			<label style="float:right;margin-right:5px;">Total Points:</label>
 			<table class="ui-widget ui-widget-content">
-				<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:120px;">Advisor Name</th><th style="width:90px;">Semester</th><th style="width:30px;">Program</th><th style="width:120px;">Industry Advisor</th><th style="width:120px!important;">Student</th><th>Project Title</th><th style="width:80px;">Point Value</th></tr></thead>
+				<thead><tr class="ui-widget-header"><th style="width:20px;"></th><th style="width:120px;">Name</th><th style="width:90px;">Semester</th><th style="width:30px;">Program</th><th style="width:120px;">Industry Advisor</th><th style="width:120px!important;">Student</th><th>Project Title</th><th style="width:80px;">Point Value</th></tr></thead>
 				<tbody id="ProjectTable"></tbody>
 			</table>
 		</div>

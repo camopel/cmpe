@@ -24,7 +24,7 @@ module.exports =  function(db){
 					lastname:item.lastname.trim(),
 					firstname:item.firstname.trim(),
 					email:item.email!=null?item.email.trim():"",
-					password:generateRandomPassword(),
+					password:"pswd",//generateRandomPassword(),
 					role:'user',
 					updatetime:new Date()
 				});
@@ -66,33 +66,25 @@ module.exports =  function(db){
 	router.post('/', function(req, res, next) {
 		if(!req.session || !req.session.login || req.session.role!="admin" || req.session.sjsuid!="admin")
 		{
-			var result = {
-				"success":"false",
-				"msg":"Not login as admin. Redirect to Login Page after 3 seconds",
-				"redirectpage":"/view/login.html"
-			};
-			res.send(result);
+			// var result = {
+				// "success":"false",
+				// "msg":"Not login as admin. Redirect to Login Page after 3 seconds",
+				// "redirectpage":"/view/login.html"
+			// };
+			// res.send(result);
+			res.redirect("/view/login.html");
 		}
 		else{
 			if (!req.files){
-				var result = {
-					"success":"false",
-					"msg":"No file uploaded"
-				};
-				res.send(result);
+				res.send({"success":"false","msg":"No file uploaded"});
 			}
 			else
 			{
-				var file = req.files["upload_file[]"];
+				var file = req.files["upload_file"];	
+				//console.log(file.mimetype); //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet		
 				file.mv(req.app.locals.uploadDir+file.name, function(err){
-					if (err!=null){
-						var result = {
-							"success":"false",
-							"msg":err
-						};
-						res.send(result);
-					}
-					else {
+					if (err!=null){res.send({"success":"false", "msg":err});}
+					else{
 						var XLSX = require('xlsx');
 						var workbook = XLSX.readFile(req.app.locals.uploadDir+file.name);
 						var first_sheet_name = workbook.SheetNames[0];
@@ -106,24 +98,32 @@ module.exports =  function(db){
 						if(map[req.body.upload_for]!=null)
 						{
 							var ws = worksheetParse(map[req.body.upload_for].datatype,json);
-							var collection = db.collection(map[req.body.upload_for].collection);
+							var coln = map[req.body.upload_for].collection;
+							var collection = db.collection(coln);
+							//console.log(coln);
 							for(var i=0;i<ws.length;i++)
-							{								
-								collection.insertOne(ws[i]);								
+							{
+								var filter = {};
+								if(coln=="users") filter["sjsuid"]=ws[i].sjsuid;
+								else if(coln=="conversions"){
+									filter["sjsuid"]=ws[i].sjsuid;
+									filter["semester"]=ws[i].semester;
+								}
+								else if(coln=="projects"){
+									filter["sjsuid"]=ws[i].sjsuid;
+									filter["semester"]=ws[i].semester;
+									filter["student"]=ws[i].student;
+								}
+								collection.updateOne(filter, {$set:ws[i]},{upsert:true});//,function(err,r){console.log(r);}
+								//collection.insertOne(ws[i]);								
 							}
-							res.send({
-								"success":"true",
-								"msg":'Uploaded '+ws.length+' Records'
-							});							
+							res.send({ "success":"true", "msg":'Uploaded '+ws.length+' Records' });							
 						}
-						else{
-							res.send({
-								"success":"false",
-								"msg":'Wrong Parameter'
-							});
-						}
+						else{res.send({"success":"false","msg":'Wrong Parameter'});}
 					}					
 				});	
+								
+				
 			}
 		}
 	});

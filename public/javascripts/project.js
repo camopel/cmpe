@@ -16,10 +16,7 @@ var Project={
 	pd_points:null,	
 	pd_allFields:null,
 	dict:["","Winter","Spring","Summer","Fall"],
-	semester2String:function(s)
-	{
-		return (Project.dict[s.charAt(3)]+" "+s.charAt(0)+"0"+s.substring(1,3));
-	},
+	semester2String:function(s){return (s.charAt(0)+"0"+s.substring(1,3)+" "+Project.dict[s.charAt(3)]);},
 	create:function(){
 		if(Project.RawData!=null)
 		{
@@ -52,7 +49,7 @@ var Project={
 						if($(td).hasClass("checked")) Project.LastSelectedRow = $(this).index();
 						else Project.LastSelectedRow=-1;
 					});
-					$("#pt_year").val("");
+					//$("#pt_year").val("");
 					Project.updateTotal();
 				}
 				else $('#msg').text(data.msg);				
@@ -199,11 +196,20 @@ var Project={
 		$("#BtnAddProject").button().on("click",Project.addShow);
 		$("#BtnDelProject").button().on("click",Project.delShow);
 		$("#Project select").change(Project.ysChange);
+		//Initial Select
+		var today = new Date();
+		var year = today.getFullYear();
+		for(var i=year;i>=2013;i--){
+			for(var j=1;j<=4;j++){
+				var s = i+" "+Conversion.dict[j];
+				$("#pt_semester").append($('<option>',{value: s, text: s}));
+			}
+		}
 	},
 	ysChange:function(e){
 		$("#ProjectTable tr").each(function(i,row){
 			var tdtxt = $(row).children("td.ys").text();
-			var tartxt = $("#pt_semester").val()+" "+$("#pt_year").val();
+			var tartxt = $("#pt_semester").val();//+" "+$("#pt_year").val();
 			if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 			else $(row).css("display","none");
 		});

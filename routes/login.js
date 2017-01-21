@@ -43,14 +43,15 @@ module.exports =  function(db){
 											"firstname":entry.object.givenName,
 											"sjsuid":entry.object.sAMAccountName,
 											"role":"user",
-											"password":req.body.password,
+											"password":"pswd",//req.body.password,
 											"updatetime":new Date()}},{upsert:true},
 										function(err,r){
 											//if(err){console.log("update err:"+JSON.stringify(err));}
 											req.session.role = "user";
 											req.session.login = true;
-											req.session.sjsuid = entry.object.sAMAccountName;
-											res.cookie('sjsuid',entry.object.sAMAccountName);
+											var sid = entry.object.sAMAccountName;//"000093497";
+											req.session.sjsuid = sid;
+											res.cookie('sjsuid',sid);
 											res.send({"success":"true","msg":"Login succeed","redirectpage":"/view/index.html"});
 										});
 									});

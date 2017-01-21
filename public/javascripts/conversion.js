@@ -15,7 +15,7 @@ var Conversion={
 	dict:["","Winter","Spring","Summer","Fall"],
 	semester2String:function(s)
 	{
-		return (Conversion.dict[s.charAt(3)]+" "+s.charAt(0)+"0"+s.substring(1,3));
+		return (s.charAt(0)+"0"+s.substring(1,3)+" "+Conversion.dict[s.charAt(3)]);
 	},
 	create:function(){
 		if(Conversion.RawData!=null)
@@ -49,7 +49,7 @@ var Conversion={
 						if($(td).hasClass("checked")) Conversion.LastSelectedRow = $(this).index();
 						else Conversion.LastSelectedRow=-1;
 					});
-					$("#ct_year").val("");
+					//$("#ct_year").val("");
 					Conversion.updateTotal();
 				}
 				else $('#msg').text(data.msg);
@@ -184,11 +184,21 @@ var Conversion={
 		$("#BtnAddConversion" ).button().on("click",Conversion.addShow);
 		$("#BtnDelConversion" ).button().on("click",Conversion.delShow);
 		$("#Conversion select").change(Conversion.ysChange);
+		//Initial Select
+		var today = new Date();
+		var year = today.getFullYear();
+		for(var i=year;i>=2013;i--){
+			for(var j=1;j<=4;j++){
+				var s = i+" "+Conversion.dict[j];
+				$("#ct_semester").append($('<option>',{value: s, text: s}));
+			}
+		}
+		
 	},
 	ysChange:function(e){
 		$("#ConversionTable tr").each(function(i,row){
 			var tdtxt = $(row).children("td.ys").text();
-			var tartxt = $("#ct_semester").val()+" "+$("#ct_year").val();
+			var tartxt = $("#ct_semester").val();//$("#ct_semester").val()+" "+$("#ct_year").val();
 			if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 			else $(row).css("display","none");
 		});
