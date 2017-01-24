@@ -34,7 +34,7 @@ module.exports =  function(db){
 							else{
 								var users = {};
 								for(var i=0;i<us.length;i++){
-									users[us[i].sjsuid]=us[i].lastname+" "+us[i].firstname;							
+									users[us[i].sjsuid]=us[i].firstname+","+us[i].lastname;							
 								}
 								for(var i=0;i<list.length;i++){
 									list[i]["name"] = users[list[i].sjsuid];

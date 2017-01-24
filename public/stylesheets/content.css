@@ -193,3 +193,10 @@ word-wrap:break-word;
 .readonlyinfo input{
 	background-color:#ddd;
 }
+#Summary a:hover, .logout a:hover {
+    color: #207AD1;
+}
+#Summary a, .logout a{
+	color:#2098D1;
+	text-decoration:none;
+}

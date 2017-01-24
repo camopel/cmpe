@@ -12,15 +12,15 @@ var Conversion={
 	cd_id:null,
 	cd_comment:null,
 	cd_allFields:null,
+	name_filter:"",
 	dict:["","Winter","Spring","Summer","Fall"],
-	semester2String:function(s)
-	{
-		return (s.charAt(0)+"0"+s.substring(1,3)+" "+Conversion.dict[s.charAt(3)]);
-	},
+	semester2String:function(s){return (Conversion.dict[s.charAt(3)]+" "+s.charAt(0)+"0"+s.substring(1,3));},
 	create:function(){
 		if(Conversion.RawData!=null)
 		{
 			$("#ConversionTable").html("");
+			$("#ct_professor").html("");
+			$("#ct_professor").append($('<option>',{value: "" , text: "All"}));
 			$('#msg').text("");
 			Conversion.RawData=null;
 		}
@@ -31,8 +31,14 @@ var Conversion={
 			success: function(data) {					
 				if(data.success=='true')
 				{
+					Conversion.UserDict = data.users;					
+					for (var id in data.users){
+						var name = data.users[id];
+						$("#ct_professor").append($('<option>',{value: name , text: name}));
+					}
+					$("#ct_professor").val(Conversion.name_filter);
+					
 					Conversion.RawData = data.data;
-					Conversion.UserDict = data.users;
 					data.data.forEach(function(row){
 						$("#ConversionTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Conversion.semester2String(row.semester)+'</td><td class="cv">'+row.conv+'</td><td>'+row.comment+'</td></tr>');
 					});
@@ -49,7 +55,7 @@ var Conversion={
 						if($(td).hasClass("checked")) Conversion.LastSelectedRow = $(this).index();
 						else Conversion.LastSelectedRow=-1;
 					});
-					//$("#ct_year").val("");
+					Conversion.nameChange();
 					Conversion.updateTotal();
 				}
 				else $('#msg').text(data.msg);
@@ -183,17 +189,22 @@ var Conversion={
 		$("#BtnUpdateConversion" ).button().on("click",Conversion.updateShow);
 		$("#BtnAddConversion" ).button().on("click",Conversion.addShow);
 		$("#BtnDelConversion" ).button().on("click",Conversion.delShow);
-		$("#Conversion select").change(Conversion.ysChange);
+		$("#ct_semester").change(Conversion.ysChange);
 		//Initial Select
 		var today = new Date();
 		var year = today.getFullYear();
 		for(var i=year;i>=2013;i--){
-			for(var j=1;j<=4;j++){
-				var s = i+" "+Conversion.dict[j];
+			for(var j=4;j>=2;j--){
+				var s = Conversion.dict[j]+" "+i;
 				$("#ct_semester").append($('<option>',{value: s, text: s}));
 			}
 		}
 		
+		for(var i=year;i>=2013;i--){
+			$("#cd_year").append($('<option>',{value: "2"+i%100, text: i}));			
+		}
+		
+		$("#ct_professor").change(Conversion.nameChange);		
 	},
 	ysChange:function(e){
 		$("#ConversionTable tr").each(function(i,row){
@@ -202,7 +213,20 @@ var Conversion={
 			if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 			else $(row).css("display","none");
 		});
-		Conversion.updateTotal();		
+		Conversion.updateTotal();
+		Conversion.name_filter = "";
+		$("#ct_professor").val("");
+	},
+	nameChange:function(){
+		var selName = $("#ct_professor").val();
+		Conversion.name_filter = selName;
+		$("#ConversionTable tr").each(function(i,row){
+			var rowProfName = $(row).children(":nth-child(2)").text();							
+			if(rowProfName.indexOf(selName)!=-1) $(row).css("display","");
+			else $(row).css("display","none");
+		});
+		Conversion.updateTotal();
+		$("#ct_semester").val("");
 	},
 	updateTotal:function(){
 		var sum=0;

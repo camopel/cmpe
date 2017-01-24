@@ -15,12 +15,15 @@ var Project={
 	pd_project:null,
 	pd_points:null,	
 	pd_allFields:null,
+	name_filter:"",
 	dict:["","Winter","Spring","Summer","Fall"],
-	semester2String:function(s){return (s.charAt(0)+"0"+s.substring(1,3)+" "+Project.dict[s.charAt(3)]);},
+	semester2String:function(s){return (Project.dict[s.charAt(3)]+" "+s.charAt(0)+"0"+s.substring(1,3));},
 	create:function(){
 		if(Project.RawData!=null)
 		{
 			$("#ProjectTable").html("");
+			$("#pt_professor").html("");
+			$("#pt_professor").append($('<option>',{value: "" , text: "All"}));
 			$('#msg').text("");
 			Project.RawData=null;
 		}
@@ -31,10 +34,17 @@ var Project={
 			success: function(data) {					
 				if(data.success=='true')
 				{
-					Project.RawData = data.data;
 					Project.UserDict = data.users;
-					data.data.forEach(function(row){
+					for (var id in data.users){
+						var name = data.users[id];
+						$("#pt_professor").append($('<option>',{value: name , text: name}));
+					}
+					$("#pt_professor").val(Project.name_filter);
+					
+					Project.RawData = data.data;					
+					data.data.forEach(function(row){						
 						$("#ProjectTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Project.semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="pi">'+row.points+'</td></tr>');
+						
 					});
 					
 					$("#ProjectTable").find('tr').click(function(ev) {
@@ -49,7 +59,8 @@ var Project={
 						if($(td).hasClass("checked")) Project.LastSelectedRow = $(this).index();
 						else Project.LastSelectedRow=-1;
 					});
-					//$("#pt_year").val("");
+					
+					Project.nameChange();
 					Project.updateTotal();
 				}
 				else $('#msg').text(data.msg);				
@@ -195,16 +206,22 @@ var Project={
 		$("#BtnUpdateProject" ).on( "click", Project.updateShow);		
 		$("#BtnAddProject").button().on("click",Project.addShow);
 		$("#BtnDelProject").button().on("click",Project.delShow);
-		$("#Project select").change(Project.ysChange);
+		$("#pt_semester").change(Project.ysChange);
 		//Initial Select
 		var today = new Date();
 		var year = today.getFullYear();
 		for(var i=year;i>=2013;i--){
-			for(var j=1;j<=4;j++){
-				var s = i+" "+Conversion.dict[j];
+			for(var j=4;j>=2;j--){
+				var s = Project.dict[j]+" "+i;
 				$("#pt_semester").append($('<option>',{value: s, text: s}));
 			}
 		}
+		
+		
+		for(var i=year;i>=2013;i--){
+			$("#pd_year").append($('<option>',{value: "2"+i%100, text: i}));			
+		}
+		$("#pt_professor").change(Project.nameChange);		
 	},
 	ysChange:function(e){
 		$("#ProjectTable tr").each(function(i,row){
@@ -213,7 +230,20 @@ var Project={
 			if(tdtxt.indexOf(tartxt)!=-1) $(row).css("display","");
 			else $(row).css("display","none");
 		});
-		Project.updateTotal();		
+		Project.updateTotal();	
+		Project.name_filter = "";
+		$("#pt_professor").val("");		
+	},
+	nameChange:function(){
+		var selName = $("#pt_professor").val();
+		Project.name_filter = selName;
+		$("#ProjectTable tr").each(function(i,row){
+			var rowProfName = $(row).children(":nth-child(2)").text();							
+			if(rowProfName.indexOf(selName)!=-1) $(row).css("display","");
+			else $(row).css("display","none");
+		});
+		Project.updateTotal();
+		$("#pt_semester").val("");
 	},
 	updateTotal:function(){
 		var sum=0;

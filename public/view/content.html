@@ -27,7 +27,16 @@ $(function(){
 	Conversion.initial();	
 	Project.initial();
 	Email.initial();
-	Summary.initial();
+	Summary.initial(function(tab,name){
+		if(tab=="Project"){
+			Project.name_filter=name;
+			$("#tabs").tabs( "option", "active", 2);
+		}
+		else if(tab=="Conversion"){
+			Conversion.name_filter=name;
+			$("#tabs").tabs( "option", "active", 3);
+		}		
+	});
 	$('#EmailEditor').jqte();
 	$("#tabs").tabs({
 		beforeActivate: function( event, ui ){
@@ -97,7 +106,14 @@ $(function(){
 			<label style="float:left;margin-left:5px;line-height:30px;">Value:</label>
 			<input type="text" name="Balance_number" id="Balance_number" style="float:left;width:30px;margin-left:5px;" class="text ui-widget-content ui-corner-all" value="0">
 			<table class="ui-widget ui-widget-content">
-				<thead><tr class="ui-widget-header"><th style="width:500px">Name</th><th>Project Total Balance</th></tr></thead>
+				<thead>
+					<tr class="ui-widget-header">
+						<th style="width:300px">Name</th>
+						<th>Project Total Balance</th>
+						<th>Project Details Link</th>
+						<th>Conversion Details Link</th> 
+					</tr>
+				</thead>
 				<tbody id="BalanceTable"></tbody>
 			</table>
 		</div>
@@ -120,8 +136,10 @@ $(function(){
 			<button id="BtnUpdateConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
 			<button id="BtnAddConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
 			<button id="BtnDelConversion" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
-			<label style="float:left;margin-left:50px;">Semester</label>
+			<label style="float:left;margin-left:20px;">Semester</label>
 			<select id="ct_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
+			<label style="float:left;margin-left:20px;">Name</label>
+			<select id="ct_professor" style="margin-left:5px;float:left;width:250px;"><option value="">All</option></select>
 			<label style="margin-right:20px;float:right;" id="ct_totalconv"></label>
 			<label style="float:right;margin-right:5px;">Total Conversion:</label>			
 			<table class="ui-widget ui-widget-content">
@@ -136,8 +154,10 @@ $(function(){
 			<button id="BtnUpdateProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Update</button>
 			<button id="BtnAddProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Add</button>
 			<button id="BtnDelProject" class="ctrlBtn ui-button ui-corner-all ui-widget">Delete</button>
-			<label style="float:left;margin-left:50px;">Semester</label>
+			<label style="float:left;margin-left:20px;">Semester</label>
 			<select id="pt_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
+			<label style="float:left;margin-left:20px;">Name</label>
+			<select id="pt_professor" style="margin-left:5px;float:left;width:250px;"><option value="">All</option></select>			
 			<label style="margin-right:20px;float:right;" id="pt_totalpi"></label>
 			<label style="float:right;margin-right:5px;">Total Points:</label>
 			<table class="ui-widget ui-widget-content">
@@ -191,18 +211,18 @@ $(function(){
 		<input type="text" name="cd_sjsuid" id="cd_sjsuid" class="text ui-widget-content ui-corner-all">
 		<label for="cd_year">Academic Year</label>		
 		<select name="cd_year" id="cd_year" class="text ui-widget-content ui-corner-all">
-			<option value="213">2013</option>
+			<!--<option value="213">2013</option>
 			<option value="214">2014</option>
 			<option value="215">2015</option>
 			<option value="216">2016</option>
-			<option value="217">2017</option>
+			<option value="217">2017</option>-->
 		</select>
 		<label for="cd_season">Semester</label>
 		<select name="cd_season" id="cd_season" class="text ui-widget-content ui-corner-all">
-			<option value="1">Winter</option>
-			<option value="2">Spring</option>
-			<option value="3">Summer</option>
+			<!--<option value="1">Winter</option>-->			
 			<option value="4">Fall</option>
+			<option value="3">Summer</option>
+			<option value="2">Spring</option>
 		</select>		
 		<label for="cd_conv">Conversion</label>
 		<input type="text" name="cd_conv" id="cd_conv" class="text ui-widget-content ui-corner-all">
@@ -224,18 +244,18 @@ $(function(){
 		<input type="text" name="pd_sjsuid" id="pd_sjsuid" class="text ui-widget-content ui-corner-all">
 		<label for="pd_year">Academic Year</label>		
 		<select name="pd_year" id="pd_year" class="text ui-widget-content ui-corner-all">
-			<option value="213">2013</option>
+		<!--	<option value="213">2013</option>
 			<option value="214">2014</option>
 			<option value="215">2015</option>
 			<option value="216">2016</option>
-			<option value="217">2017</option>
+			<option value="217">2017</option>-->
 		</select>
 		<label for="pd_season">Semester</label>
-		<select name="pd_season" id="pd_season" class="text ui-widget-content ui-corner-all">
-			<option value="1">Winter</option>
-			<option value="2">Spring</option>
-			<option value="3">Summer</option>
+		<select name="pd_season" id="pd_season" class="text ui-widget-content ui-corner-all">			
+			<!--<option value="1">Winter</option>-->			
 			<option value="4">Fall</option>
+			<option value="3">Summer</option>
+			<option value="2">Spring</option>
 		</select>		
 		<label for="pd_program">Program</label>
 		<input type="text" name="pd_program" id="pd_program" class="text ui-widget-content ui-corner-all">

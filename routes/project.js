@@ -4,12 +4,13 @@ module.exports =  function(db){
 	router.get('/', function(req, res, next) {		
 		if(!req.session || !req.session.login || req.session.role!="admin" || req.session.sjsuid!="admin")
 		{
-			var result = {
-				"success":"false",
-				"msg":"Not login as admin. Redirect to Login Page after 3 seconds",
-				"redirectpage":"/view/login.html"
-			};
-			res.send(result);
+			// var result = {
+				// "success":"false",
+				// "msg":"Not login as admin. Redirect to Login Page after 3 seconds",
+				// "redirectpage":"/view/login.html"
+			// };
+			// res.send(result);
+			res.redirect("/view/login.html");
 		}
 		else{
 			if(req.query.cmd=="show")
@@ -37,7 +38,7 @@ module.exports =  function(db){
 							else{
 								var users = {};
 								for(var i=0;i<us.length;i++){
-									users[us[i].sjsuid]=us[i].lastname+","+us[i].firstname;							
+									users[us[i].sjsuid]=us[i].firstname+","+us[i].lastname;		
 								}
 								for(var i=0;i<list.length;i++){
 									list[i]["name"] = users[list[i].sjsuid];
@@ -97,6 +98,53 @@ module.exports =  function(db){
 				db.collection('projects').removeOne({"_id":new ObjectID(req.query.id)},{w:1},function(err, r){
 					if(err!=null) res.send({"success":"false","msg":err});
 					else res.send({"success":"true"});
+				});
+			}
+			else if(req.query.cmd=="summary"){
+				db.collection('projects').find().toArray(function(err,projs){
+					if(err!=null) res.send({"success":"false","msg":err});
+					else{
+						var projects = [];
+						for(var i=0;i<projs.length;i++)
+						{	
+							var row=projs[i];
+							projects.push({
+								"sjsuid":row.sjsuid,
+								"points":row.points
+							});
+						}
+						db.collection('users').find({'role':'user'}).toArray(function(err,us){
+							if(err!=null) res.send({"success":"false","msg":err});
+							else{
+								var users = {};
+								for(var i=0;i<us.length;i++){
+									users[us[i].sjsuid]=us[i].firstname+","+us[i].lastname;							
+								}
+								
+								db.collection('conversions').find().toArray(function(err,convs){
+									if(err!=null) res.send({"success":"false","msg":err});
+									else{
+										var conventions = [];
+										for(var i=0;i<convs.length;i++)
+										{	
+											var row=convs[i];
+											conventions.push({												
+												"sjsuid":row.sjsuid,
+												"conv":row.conversion
+											});
+										}
+										var result = {
+											"success":"true",
+											"projects":projects,
+											"users":users,
+											"conversion":conventions
+										};
+										res.send(result);
+									}
+								});
+							}							
+						});
+					}										
 				});
 			}
 		}
