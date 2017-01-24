@@ -40,7 +40,7 @@ var Conversion={
 					
 					Conversion.RawData = data.data;
 					data.data.forEach(function(row){
-						$("#ConversionTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Conversion.semester2String(row.semester)+'</td><td class="cv">'+row.conv+'</td><td>'+row.comment+'</td></tr>');
+						$("#ConversionTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Conversion.semester2String(row.semester)+'</td><td class="cv">'+row.conv+'</td><td class="left">'+row.comment+'</td></tr>');
 					});
 					
 					$("#ConversionTable").find('tr').click(function(ev) {
@@ -86,7 +86,7 @@ var Conversion={
 					Conversion.RawData[Conversion.LastSelectedRow].name=name;					
 					var lastrow = $('#ConversionTable tr:eq(' + Conversion.LastSelectedRow + ')');
 					var semster = Conversion.semester2String(Conversion.RawData[Conversion.LastSelectedRow].semester);					
-					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+semster+'</td><td class="cv">'+Conversion.cd_conv.val()+'</td><td>'+Conversion.cd_comment.val()+'</td>');
+					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+semster+'</td><td class="cv">'+Conversion.cd_conv.val()+'</td><td class="left">'+Conversion.cd_comment.val()+'</td>');
 					Conversion.updateTotal();
 					Conversion.cd_close();
 				}

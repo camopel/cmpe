@@ -49,7 +49,7 @@ module.exports =  function(db){
 											//if(err){console.log("update err:"+JSON.stringify(err));}
 											req.session.role = "user";
 											req.session.login = true;
-											var sid = entry.object.sAMAccountName;//"000093497";
+											var sid = entry.object.sAMAccountName;//"010081045";//
 											req.session.sjsuid = sid;
 											res.cookie('sjsuid',sid);
 											res.send({"success":"true","msg":"Login succeed","redirectpage":"/view/index.html"});

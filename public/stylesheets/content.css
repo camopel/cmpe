@@ -193,10 +193,14 @@ word-wrap:break-word;
 .readonlyinfo input{
 	background-color:#ddd;
 }
-#Summary a:hover, .logout a:hover {
+#Summary a:hover, .logout a:hover, #Download a:hover{
     color: #207AD1;
+	cursor:pointer;	
 }
-#Summary a, .logout a{
+#Summary a, .logout a, #Download a{
 	color:#2098D1;
 	text-decoration:none;
+}
+#ProjectTable .left,#ConversionTable .left{
+	text-align: left;
 }

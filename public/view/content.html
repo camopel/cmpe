@@ -60,6 +60,11 @@ $(function(){
 			});
 		}
 	});
+	$("#Download a").click(function (){
+		var sid = document.cookie.substring(idx+7,idx+16).trim();
+		$("#downloadFor").val(sid);		
+		$("#Download form").attr("action",'/dld').submit();
+	});
 });
 </script>
 </head>
@@ -74,6 +79,7 @@ $(function(){
 		<li><a href="#Conversion">Conversion</a></li>
 		<li><a href="#Faculty">Faculty</a></li>
 		<li><a href="#Email">Email</a></li>
+		<li><a href="#Download">Download</a></li>
 	</ul>
 		
 	<div id="Upload" style="padding-left:15px;">
@@ -139,7 +145,7 @@ $(function(){
 			<label style="float:left;margin-left:20px;">Semester</label>
 			<select id="ct_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
 			<label style="float:left;margin-left:20px;">Name</label>
-			<select id="ct_professor" style="margin-left:5px;float:left;width:250px;"><option value="">All</option></select>
+			<select id="ct_professor" style="margin-left:5px;float:left;width:230px;"><option value="">All</option></select>
 			<label style="margin-right:20px;float:right;" id="ct_totalconv"></label>
 			<label style="float:right;margin-right:5px;">Total Conversion:</label>			
 			<table class="ui-widget ui-widget-content">
@@ -157,7 +163,7 @@ $(function(){
 			<label style="float:left;margin-left:20px;">Semester</label>
 			<select id="pt_semester" style="margin-left:5px;float:left;width:150px;"><option value="">All</option></select>
 			<label style="float:left;margin-left:20px;">Name</label>
-			<select id="pt_professor" style="margin-left:5px;float:left;width:250px;"><option value="">All</option></select>			
+			<select id="pt_professor" style="margin-left:5px;float:left;width:230px;"><option value="">All</option></select>			
 			<label style="margin-right:20px;float:right;" id="pt_totalpi"></label>
 			<label style="float:right;margin-right:5px;">Total Points:</label>
 			<table class="ui-widget ui-widget-content">
@@ -168,6 +174,7 @@ $(function(){
 	</div>	
 
 	<div id="Email" class="noshow" style="padding-bottom:50px;">
+	
 		<div class="revlabel"><span class="rcv" title="Click to choose receivers">Receiver:</span></div>	
 		<div id="Receiver"></div>
 		<div class="subject">
@@ -180,6 +187,16 @@ $(function(){
 			<button type="button" class="ctrlBtn" style="float:right;margin:10px 15px;">Send</button>
 		</div>		
 	</div>
+	
+	<div id="Download" class="noshow">
+		<form style="line-height:30px;padding:10px;font-size:14px;" method="POST">
+			<span>All information will be combined into one file, Enjoy!</span>
+			<a>Download</a>
+			<input type="text" name="downloadFor" id="downloadFor" style="display:none">
+			<input type="submit" style="display:none">
+		</form>
+	</div>
+
 </div>
 
 <div id="UpdateFacultyDialog" title="Update" class="noshow">

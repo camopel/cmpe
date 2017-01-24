@@ -43,7 +43,7 @@ var Project={
 					
 					Project.RawData = data.data;					
 					data.data.forEach(function(row){						
-						$("#ProjectTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Project.semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry+'</td><td>'+row.student+'</td><td>'+row.project+'</td><td class="pi">'+row.points+'</td></tr>');
+						$("#ProjectTable").append('<tr><td class="checkbox"></td><td>'+row.name+'</td><td class="ys">'+Project.semester2String(row.semester)+'</td><td>'+row.program+'</td><td>'+row.industry+'</td><td>'+row.student+'</td><td class="left">'+row.project+'</td><td class="pi">'+row.points+'</td></tr>');
 						
 					});
 					
@@ -97,7 +97,7 @@ var Project={
 					Project.RawData[Project.LastSelectedRow].points=Project.pd_points.val();					
 							
 					var lastrow = $('#ProjectTable tr:eq(' + Project.LastSelectedRow + ')');
-					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+Project.semester2String(semester)+'</td><td>'+Project.pd_program.val()+'</td><td>'+Project.pd_industry.val()+'</td><td>'+student+'</td><td>'+Project.pd_project.val()+'</td><td class="pi">'+Project.pd_points.val()+'</td>');
+					$(lastrow).html('<td class="checkbox checked"></td><td>'+name+'</td><td class="ys">'+Project.semester2String(semester)+'</td><td>'+Project.pd_program.val()+'</td><td>'+Project.pd_industry.val()+'</td><td>'+student+'</td><td class="left">'+Project.pd_project.val()+'</td><td class="pi">'+Project.pd_points.val()+'</td>');
 					Project.updateTotal();
 					Project.pd_close();
 				}
