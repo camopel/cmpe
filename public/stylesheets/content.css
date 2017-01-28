@@ -204,3 +204,10 @@ word-wrap:break-word;
 #ProjectTable .left,#ConversionTable .left{
 	text-align: left;
 }
+
+.article{
+	margin:10px 5px;
+}
+.article p{
+	margin:0px;
+}	
