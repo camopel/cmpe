@@ -193,11 +193,11 @@ word-wrap:break-word;
 .readonlyinfo input{
 	background-color:#ddd;
 }
-#Summary a:hover, .logout a:hover, #Download a:hover{
+#Summary a:hover, .logout a:hover, #Download a:hover .article a:hover{
     color: #207AD1;
 	cursor:pointer;	
 }
-#Summary a, .logout a, #Download a{
+#Summary a, .logout a, #Download a, .article a{
 	color:#2098D1;
 	text-decoration:none;
 }
