@@ -20,8 +20,8 @@ app.use(session({
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 app.locals={
-	port:'8443',
-	dburl:'mongodb://cmpeadmin:cmpe12#$@130.65.159.30:27017/cmpe',
+	port:'xxport',
+	dburl:'xxurl',
 	uploadDir:path.join(__dirname, 'upload/')
 };
 
