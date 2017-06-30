@@ -32,7 +32,7 @@ var Faculty = {
 					Faculty.RawData[Faculty.LastSelectedRow].email=Faculty.fd_email.val();
 					Faculty.RawData[Faculty.LastSelectedRow].sid=Faculty.fd_sid.val();
 					var lastrow = $('#FacultyTable tr:eq(' + Faculty.LastSelectedRow + ')');
-					var faculty_name = Faculty.fd_fn.val()+','+Faculty.fd_ln.val();
+					var faculty_name = Faculty.fd_ln.val()+','+Faculty.fd_fn.val();
 					$(lastrow).html('<td class="checkbox checked"></td><td>'+Faculty.fd_sid.val()+'</td><td>'+faculty_name+'</td><td>'+Faculty.fd_email.val()+'</td>');
 					Faculty.fd_close();
 				}
@@ -79,7 +79,7 @@ var Faculty = {
 				{
 					Faculty.RawData = data.data;
 					data.data.forEach(function(row){
-						var faculty_name = row.firstname+','+row.lastname;
+						var faculty_name = row.lastname+","+row.firstname;
 						$("#FacultyTable").append( '<tr><td class="checkbox"></td><td>'+row.sid+'</td><td>'+faculty_name+'</td><td>'+row.email+'</td></tr>');
 					});
 					

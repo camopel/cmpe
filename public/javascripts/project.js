@@ -35,10 +35,16 @@ var Project={
 				if(data.success=='true')
 				{
 					Project.UserDict = data.users;
+					var arr = [];
 					for (var id in data.users){
-						var name = data.users[id];
+						arr.push(data.users[id]);
+					}
+					arr.sort();
+					for (var id in arr){
+						var name=arr[id];
 						$("#pt_professor").append($('<option>',{value: name , text: name}));
 					}
+					
 					$("#pt_professor").val(Project.name_filter);
 					
 					Project.RawData = data.data;					

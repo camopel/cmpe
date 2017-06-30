@@ -55,7 +55,7 @@ module.exports =  function(db){
 					program:item.program.trim(),
 					industry_advisor:item["industry advisor"]!=null?item["industry advisor"].trim():"",					
 					student:item.student.replace(","," ").trim(),
-					project:item["project title"]!=null?item["project title"].trim():ws[ws.length-1]["project"],
+					project:item["project title"]!=null?item["project title"].trim(): (ws.length>0?ws[ws.length-1]["project"]:""),
 					points:item.points.trim()
 				});
 			}

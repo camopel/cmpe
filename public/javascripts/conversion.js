@@ -31,9 +31,14 @@ var Conversion={
 			success: function(data) {					
 				if(data.success=='true')
 				{
-					Conversion.UserDict = data.users;					
+					Conversion.UserDict = data.users;	
+					var arr = [];
 					for (var id in data.users){
-						var name = data.users[id];
+						arr.push(data.users[id]);
+					}
+					arr.sort();
+					for (var id in arr){
+						var name=arr[id];
 						$("#ct_professor").append($('<option>',{value: name , text: name}));
 					}
 					$("#ct_professor").val(Conversion.name_filter);
