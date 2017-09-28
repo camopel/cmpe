@@ -27,7 +27,7 @@ var Summary={
 						points[row.sjsuid]+=parseFloat(row.conv);						
 					});					
 					for(var sid in points){
-						$("#BalanceTable").append('<tr><td>'+data.users[sid]+'</td><td class="pts">'+points[sid].toFixed(2)+'</td>'+'<td><a>project detail</a></td><td><a>conversion detail</a></td></tr>');
+						$("#BalanceTable").append('<tr><td>'+sid+'</td><td>'+data.users[sid]+'</td><td class="pts">'+points[sid].toFixed(2)+'</td>'+'<td><a>project detail</a></td><td><a>conversion detail</a></td></tr>');
 					}
 					$("#BalanceTable tr td a").click(Summary.showdetail);
 					
