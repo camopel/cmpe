@@ -4,7 +4,8 @@ var Summary={
 		var t=$(event.target).text();
 		var tab="Project";
 		if(t.indexOf("conv")!=-1) tab="Conversion";
-		var name = $(event.target).parent().parent().children(":first-child").text();		
+		//var name = $(event.target).parent().parent().children(":first-child").text();		
+		var name = $(event.target).parent().parent().children().eq(1).text();
 		if(Summary.tabUICallback!=null) Summary.tabUICallback(tab,name);
 	},
 	create:function(){
